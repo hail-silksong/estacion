@@ -1,0 +1,7 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "DHT22") (type "KiCad") (uri "${KIPRJMOD}/simbolos/DHT22.kicad_sym") (options "") (descr ""))
+	(lib (name "PICO ZERO") (type "KiCad") (uri "${KIPRJMOD}/simbolos/RP2040-ZERO.kicad_sym") (options "") (descr ""))
+	(lib (name "FDPlayer") (type "KiCad") (uri "${KIPRJMOD}/simbolos/FN-M16P.kicad_sym") (options "") (descr ""))
+	(lib (name "BMP180") (type "KiCad") (uri "${KIPRJMOD}/simbolos/PRESSURE-BMP180_LGA7_.kicad_sym") (options "") (descr ""))
+)
