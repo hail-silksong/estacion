@@ -2427,7 +2427,7 @@
 				)
 			)
 		)
-		(property "Footprint" "FN-M16P:FN-M16P"
+		(property "Footprint" "especificos:FN-M16P"
 			(at 116.84 110.49 0)
 			(hide yes)
 			(show_name no)
@@ -2605,7 +2605,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 120.65 91.44 0)
+		(at 104.14 83.82 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2616,7 +2616,7 @@
 		(fields_autoplaced yes)
 		(uuid "0ff5ae95-28a2-47cf-b96e-5beb1e0de2f4")
 		(property "Reference" "R2"
-			(at 124.46 90.1699 0)
+			(at 107.95 82.5499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2627,7 +2627,7 @@
 			)
 		)
 		(property "Value" "R_US"
-			(at 124.46 92.7099 0)
+			(at 107.95 85.0899 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2637,8 +2637,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 121.666 91.694 90)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+			(at 105.156 84.074 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2649,7 +2649,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 120.65 91.44 0)
+			(at 104.14 83.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2660,7 +2660,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 120.65 91.44 0)
+			(at 104.14 83.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2717,7 +2717,7 @@
 				)
 			)
 		)
-		(property "Footprint" "DHT22:XDCR_DHT22"
+		(property "Footprint" "especificos:XDCR_DHT22"
 			(at 176.53 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -3019,7 +3019,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RP2040-ZERO:MODULE_RP2040-ZERO"
+		(property "Footprint" "especificos:MODULE_RP2040-ZERO"
 			(at 144.78 53.34 0)
 			(hide yes)
 			(show_name no)
