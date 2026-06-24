@@ -658,6 +658,14 @@
     "meta": {
       "version": 1
     },
+    "ngspice": {
+      "fix_include_paths": true,
+      "meta": {
+        "version": 0
+      },
+      "model_mode": 4,
+      "workbook_filename": ""
+    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "reuse_designators": true,
@@ -670,7 +678,7 @@
         "uuid": "65db9eb0-748a-4b13-b93f-b47348ad70f0"
       }
     ],
-    "used_designators": "",
+    "used_designators": "#PWR1,#PWR3,#PWR6-13,#FLG2-3,J1",
     "variants": []
   },
   "sheets": [
