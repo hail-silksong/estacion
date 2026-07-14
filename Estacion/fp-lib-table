@@ -2,4 +2,5 @@
 	(version 7)
 	(lib (name "especificos") (type "KiCad") (uri "${KIPRJMOD}/huellas") (options "") (descr ""))
 	(lib (name "Potenciometro") (type "KiCad") (uri "${KIPRJMOD}/huellas") (options "") (descr ""))
+	(lib (name "Display") (type "KiCad") (uri "C:/Users/Sofía/Downloads/Display.pretty") (options "") (descr ""))
 )

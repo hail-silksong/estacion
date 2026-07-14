@@ -5,4 +5,5 @@
 	(lib (name "FDPlayer") (type "KiCad") (uri "${KIPRJMOD}/simbolos/FN-M16P.kicad_sym") (options "") (descr ""))
 	(lib (name "BMP180") (type "KiCad") (uri "${KIPRJMOD}/simbolos/PRESSURE-BMP180_LGA7_.kicad_sym") (options "") (descr ""))
 	(lib (name "prueba") (type "KiCad") (uri "C:/Users/pc/Downloads/RF_Module.kicad_sym") (options "") (descr ""))
+	(lib (name "Display") (type "KiCad") (uri "${KIPRJMOD}/simbolos/MCE_Displays.kicad_sym") (options "") (descr ""))
 )
