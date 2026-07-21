@@ -3944,12 +3944,6 @@
 		(color 0 0 0 0)
 		(uuid "f96cb2ba-cd35-46ad-88a6-e7080a7695d1")
 	)
-	(junction
-		(at 64.77 90.17)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fb595e81-245b-49a1-9e80-dc66556a4d0e")
-	)
 	(no_connect
 		(at 139.7 67.31)
 		(uuid "0d1e3a7a-9424-40e9-b3e4-060775227e3a")
@@ -4152,16 +4146,6 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 100.33) (xy 109.22 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1dc05141-8419-4d99-a499-e662933d0de6")
-	)
-	(wire
-		(pts
 			(xy 132.08 152.4) (xy 132.08 144.78)
 		)
 		(stroke
@@ -4242,16 +4226,6 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 111.76) (xy 86.36 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "49b4ce26-0a07-4b62-9087-ae436a314609")
-	)
-	(wire
-		(pts
 			(xy 139.7 85.09) (xy 143.51 85.09)
 		)
 		(stroke
@@ -4269,16 +4243,6 @@
 			(type default)
 		)
 		(uuid "4d3dbbbb-0dcc-416f-b928-e01e2689fe53")
-	)
-	(wire
-		(pts
-			(xy 78.74 111.76) (xy 86.36 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4e01dbc9-6367-4b07-98d5-0a336f80601f")
 	)
 	(wire
 		(pts
@@ -4372,16 +4336,6 @@
 	)
 	(wire
 		(pts
-			(xy 83.82 95.25) (xy 109.22 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5d3754be-9ff0-4a56-8d56-4cb83cab0362")
-	)
-	(wire
-		(pts
 			(xy 139.7 90.17) (xy 165.1 90.17)
 		)
 		(stroke
@@ -4429,16 +4383,6 @@
 			(type default)
 		)
 		(uuid "68885eb7-f4ae-45b8-9a3e-4d412d6da73d")
-	)
-	(wire
-		(pts
-			(xy 78.74 106.68) (xy 83.82 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6920a38f-93fd-4c12-b9d1-9258dbe997d3")
 	)
 	(wire
 		(pts
@@ -4532,16 +4476,6 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 111.76) (xy 68.58 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8a84ba39-41de-4139-952d-3c75cc8252f7")
-	)
-	(wire
-		(pts
 			(xy 162.56 92.71) (xy 139.7 92.71)
 		)
 		(stroke
@@ -4549,16 +4483,6 @@
 			(type default)
 		)
 		(uuid "8bb1d47f-51ca-49c2-b65a-54f0e5649895")
-	)
-	(wire
-		(pts
-			(xy 86.36 97.79) (xy 109.22 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8cdadabd-16c3-4eb0-aeb0-e715af3e5123")
 	)
 	(wire
 		(pts
@@ -4792,16 +4716,6 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 116.84) (xy 88.9 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dd3d6c97-84ac-49e2-ae58-16f7db046741")
-	)
-	(wire
-		(pts
 			(xy 86.36 82.55) (xy 109.22 82.55)
 		)
 		(stroke
@@ -4872,16 +4786,6 @@
 	)
 	(wire
 		(pts
-			(xy 83.82 106.68) (xy 83.82 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ed3105a2-9f12-441a-9544-830f32e74dbd")
-	)
-	(wire
-		(pts
 			(xy 162.56 80.01) (xy 166.37 80.01)
 		)
 		(stroke
@@ -4919,26 +4823,6 @@
 			(type default)
 		)
 		(uuid "f5e6ace8-486b-40fd-a04b-b81a46bdbe27")
-	)
-	(wire
-		(pts
-			(xy 88.9 116.84) (xy 88.9 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f8517f72-57a6-487f-a798-4e75949d9ce6")
-	)
-	(wire
-		(pts
-			(xy 64.77 90.17) (xy 64.77 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f9f51076-2c47-44ad-a771-2560fe47e1a8")
 	)
 	(wire
 		(pts
@@ -5566,92 +5450,6 @@
 			(project "Estacion"
 				(path "/65db9eb0-748a-4b13-b93f-b47348ad70f0"
 					(reference "U4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:LED_RABG")
-		(at 73.66 111.76 0)
-		(mirror y)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "2d4569f2-3df1-46cb-ad11-78b8a7774ef0")
-		(property "Reference" "D5"
-			(at 73.66 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "LED_RABG"
-			(at 73.66 100.33 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "LED_THT:LED_D5.0mm-4_RGB"
-			(at 73.66 113.03 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 73.66 113.03 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "RGB LED, red/anode/blue/green"
-			(at 73.66 111.76 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "4"
-			(uuid "dda520e9-c4d6-4b12-8670-3532eb1b99db")
-		)
-		(pin "3"
-			(uuid "d398b365-e9a8-4ad6-8753-968ad67665e3")
-		)
-		(pin "2"
-			(uuid "fbf40730-3ca9-4078-b758-72632bcd3d8b")
-		)
-		(pin "1"
-			(uuid "cce919bf-80c1-4ff8-a18a-6f96d7fcaa5d")
-		)
-		(instances
-			(project "Estacion"
-				(path "/65db9eb0-748a-4b13-b93f-b47348ad70f0"
-					(reference "D5")
 					(unit 1)
 				)
 			)

@@ -2,7 +2,7 @@
   "board": {
     "active_layer": 0,
     "active_layer_preset": "",
-    "auto_track_width": false,
+    "auto_track_width": true,
     "hidden_netclasses": [],
     "hidden_nets": [],
     "high_contrast_mode": 0,
@@ -63,7 +63,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "Estacion.kicad_prl",
+    "filename": "Estacion2Layer.kicad_prl",
     "version": 5
   },
   "net_inspector_panel": {
@@ -92,16 +92,16 @@
       9
     ],
     "col_widths": [
-      222,
-      207,
-      136,
-      146,
-      138,
-      154,
-      153,
-      155,
-      136,
-      136
+      162,
+      147,
+      91,
+      102,
+      97,
+      107,
+      108,
+      107,
+      91,
+      91
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
