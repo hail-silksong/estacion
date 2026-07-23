@@ -1289,6 +1289,17 @@
 			(uuid "8062d739-4095-40d7-bf97-2a5a2dbae4d5")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/modelados/DFR0299--3DModel-STEP-56544 (1).STEP"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 90 180 90)
+			)
+		)
 	)
 	(footprint "especificos:WEMOS_S2_mini"
 		(layer "F.Cu")
@@ -2639,6 +2650,17 @@
 			(uuid "6283d227-7c80-41a5-9581-c7594e98e3ae")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/modelados/DHT22.step"
+			(offset
+				(xyz 0 -15 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 90 180 180)
+			)
+		)
 	)
 	(footprint "especificos:BMP180"
 		(layer "F.Cu")
@@ -3026,15 +3048,15 @@
 			(uuid "24ce8c49-c0eb-40ce-9c7e-8bfdda684951")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x06_P2.54mm_Horizontal.step"
+		(model "${KIPRJMOD}/modelados/BME280_SENSOR_MODULE_WITH_HEADER.STEP"
 			(offset
-				(xyz 0 0 0)
+				(xyz 4.5 -6.2 2.5)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -90 -0 90)
 			)
 		)
 	)
@@ -3666,6 +3688,17 @@
 			(uuid "05fe3d5d-8bf4-4e0d-9c15-2d7ffa62df51")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/modelados/Pantalla OLED 0.96'' 128x64.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "LED_THT:LED_D5.0mm-4_RGB_Wide_Pins"
 		(layer "B.Cu")
