@@ -1,9 +1,13 @@
 """
 main.py - Estación Ambiental con ESP32-S2
-Novedad:
-  - Salta la pantalla de bienvenida automáticamente si App Inventor se conecta,
+Novedades integradas:
+  - Debouncing por software optimizado mediante temporizadores ticks_ms.
+  - Salta la pantalla de bienvenida automáticamente si App Inventor se conecta
     o si presionas el botón SW1 manualmente.
+  - Reproduce Pista 1 (Saludo) al arrancar.
+  - Alertas de audio en carpeta 'mp3' usando play_mp3_folder(pista).
   - Servidor HTTP con soporte para comandos /mute, /unmute, /toggle_mute y /reset.
+  - Control de LEDs RGB atenuados por PWM con semántica: Rojo (Crítico), Amarillo (Normal), Verde (Bajo/Noche).
 """
 
 import time
@@ -43,9 +47,10 @@ server_socket.settimeout(0.02)  # Timeout de 20ms
 dht22 = DHT22Sensor(config.DHT22_PIN)
 ldr = LDRSensor(config.LDR_ADC_PIN)
 
-led1 = RGBLed(**config.LED1_PINS, use_pwm=False)
-led2 = RGBLed(**config.LED2_PINS, use_pwm=False)
-led3 = RGBLed(**config.LED3_PINS, use_pwm=False)
+# LEDs RGB con PWM suave (max_brightness=35 para regular el brillo)
+led1 = RGBLed(**config.LED1_PINS, use_pwm=True, max_brightness=8)
+led2 = RGBLed(**config.LED2_PINS, use_pwm=True, max_brightness=8)
+led3 = RGBLed(**config.LED3_PINS, use_pwm=True, max_brightness=8)
 
 button = Pin(config.BUTTON_PIN, Pin.IN, Pin.PULL_UP)
 
@@ -54,7 +59,8 @@ VOLUMEN_DEFECTO = 20
 mp3.set_volume(VOLUMEN_DEFECTO)
 
 is_muted = False
-ultima_pista= None
+ultima_pista = None
+
 
 def show_ip_screen(ip):
     oled.fill(0)
@@ -83,76 +89,76 @@ def show_data(temp_dht, hum, temp_bmp, pres, luz):
     oled.show()
 
 
-def update_leds(luz,hum,temp_dht):
-    #LED HUMEDAD#
-    if hum < 30:
-        led3.blue()
-    elif hum < 70:
-        led3.green()
+def update_leds(luz, hum, temp_dht):
+    # LED HUMEDAD (led3)
+    hum = hum or 0
+    if hum > 70:
+        led1.red()        # Crítico (Humedad muy alta)
+    elif hum >= 30:
+        led1.yellow()     # Normal (30% - 70%)
     else:
-        led3.red()
-    #LED TEMPERATURA#
-    
-    if temp_dht < 30:
-        led2.blue()
-    elif temp_dht < 70:
-        led2.green()
-    else:
-        led2.red()
-    
-    #LED LUZ#
-    if luz < 30:
-        led1.blue()
-    elif luz < 70:
-        led1.green()
-    else:
-        led1.red()
-    
+        led1.green()      # Extremo bajo (< 30%)
 
-def update_track(luz,temp_dht,hum,pres,variacion_presion):
-    
+    # LED TEMPERATURA (led2)
+    temp_dht = temp_dht or 0
+    if temp_dht > 30:
+        led2.red()        # Crítico (Calor > 30°C)
+    elif temp_dht >= 20:
+        led2.yellow()     # Normal (20°C - 30°C)
+    else:
+        led2.green()      # Extremo bajo (Frío < 20°C)
+
+    # LED LUZ (led1)
+    luz = luz or 0
+    if luz > 70:
+        led3.red()        # Crítico (Luz muy alta > 70%)
+    elif luz >= 30:
+        led3.yellow()     # Normal (30% - 70%)
+    else:
+        led3.green()      # Extremo bajo (Noche / Oscuridad < 30%)
+
+
+def update_track(luz, temp_dht, hum, pres, variacion_presion):
     global ultima_pista
 
     pista = None
-    
-    
-    if temp_dht > 39:
+    t_val = temp_dht or 0
+    h_val = hum or 0
+    l_val = luz or 0
+
+    if t_val > 39:
         pista = 3
-    elif temp_dht < 11:
+    elif t_val < 11:
         pista = 4
-    elif hum > 70:
+    elif h_val > 70:
         pista = 6
-    elif hum < 30:
+    elif h_val < 30:
         pista = 5
-    elif luz < 30:
+    elif l_val < 30:
         pista = 2
     elif variacion_presion <= -2:
         pista = 7
-        
+
     if pista is not None and pista != ultima_pista:
-        
-        mp3.play_track(pista)
+        print("Nueva alerta de audio en carpeta 'mp3' -> {:04d}.mp3".format(pista))
+        mp3.play_mp3_folder(pista)
         ultima_pista = pista
 
-def enter_hibernation():
-    print("Entrando en modo hibernación...")
-    oled.fill(0)
-    oled.text("Hibernando...", 10, 28)
-    oled.show()
-    time.sleep_ms(1000)
+
+def enter_sleep():
+    print("Entrando en sleep...")
+
     oled.poweroff()
-    
     led1.off()
     led2.off()
     led3.off()
     mp3.pause()
 
-    esp32.wake_on_ext0(pin=button, level=esp32.WAKEUP_ALL_LOW)
-    machine.deepsleep()
+    machine.lightsleep()
 
 
 def handle_http_request():
-    """Atiende peticiones HTTP. Devuelve True si se procesó una petición (conectado)."""
+    """Atiende peticiones HTTP. Devuelve True si se procesó una petición."""
     global is_muted
     try:
         conn, addr = server_socket.accept()
@@ -164,7 +170,7 @@ def handle_http_request():
         req_str = raw_req.decode('utf-8')
         first_line = req_str.split('\r\n')[0]
         parts = first_line.split(' ')
-        
+
         path = parts[1] if len(parts) > 1 else "/"
         action_msg = "OK"
         should_reset = False
@@ -240,14 +246,13 @@ temp_dht, hum, temp_bmp, pres, luz = 0, 0, 0, 0, 0
 pres_anterior = None
 variacion_presion = 0
 
+time.sleep_ms(300)
 while button.value() == 1:
-    # Si App Inventor realiza una petición, atendemos y omitimos la espera manual
     if handle_http_request():
         print("¡Petición de App Inventor detectada! Omitiendo botón SW1...")
         break
     time.sleep_ms(30)
 
-# Si la salida fue por pulsación física del botón, esperar a que se suelte
 if button.value() == 0:
     while button.value() == 0:
         time.sleep_ms(30)
@@ -255,71 +260,142 @@ if button.value() == 0:
 
 print("Cargando interfaz principal...")
 
+# --- Reproducir Pista de Saludo / Bienvenida (0001.mp3 en carpeta 'mp3') ---
+
+print("Reproduciendo Saludo Inicial (0001.mp3)...")
+mp3.play_mp3_folder(1)
+ultima_pista = 1
+time.sleep_ms(300)
+
 
 # ==============================================================================
 #  BUCLE PRINCIPAL (Monitoreo)
 # ==============================================================================
-last_button_state = 1
+# Variables para Debouncing
+LONG_PRESS_MS = 1500
+DEBOUNCE_MS = 30
+
+debounced_state = 1
+last_raw_state = 1
+last_debounce_time = 0
+
 press_start_time = 0
 is_pressing = False
-LONG_PRESS_MS = 1500
+long_press_handled = False
 
 last_read = 0
 
+sleeping = False
+SLEEP_FREQ = 80_000_000
+NORMAL_FREQ = 240_000_000
+
 while True:
-    current_button_state = button.value()
     now = time.ticks_ms()
+    raw_state = button.value()
 
-    # --- 1. Gestión del Botón Físico SW1 ---
-    if last_button_state == 1 and current_button_state == 0:
-        is_pressing = True
-        press_start_time = now
+    # --- 1. DEBOUNCING DEL BOTÓN ---
+    if raw_state != last_raw_state:
+        last_debounce_time = now
+        last_raw_state = raw_state
 
-    if is_pressing and current_button_state == 0:
-        elapsed = time.ticks_diff(now, press_start_time)
-        if elapsed >= LONG_PRESS_MS:
+    if time.ticks_diff(now, last_debounce_time) > DEBOUNCE_MS:
+        if raw_state != debounced_state:
+            debounced_state = raw_state
+
+            # Flanco de bajada (Presionado)
+            if debounced_state == 0:
+                is_pressing = True
+                press_start_time = now
+                long_press_handled = False
+
+            # Flanco de subida (Soltado)
+            elif debounced_state == 1:
+                if is_pressing and not long_press_handled:
+                    # Pulsación corta: Mute / Unmute
+                    if is_muted:
+                        mp3.set_volume(VOLUMEN_DEFECTO)
+                        is_muted = False
+                        print("Audio: Unmute")
+                    else:
+                        mp3.set_volume(0)
+                        is_muted = True
+                        print("Audio: Mute")
+
+                is_pressing = False
+
+    # --- 2. DETECCIÓN DE PULSACIÓN LARGA ---
+    if is_pressing and not long_press_handled and debounced_state == 0:
+        if time.ticks_diff(now, press_start_time) >= LONG_PRESS_MS:
+            long_press_handled = True
             is_pressing = False
-            enter_hibernation()
 
-    if last_button_state == 0 and current_button_state == 1:
-        if is_pressing:
-            elapsed = time.ticks_diff(now, press_start_time)
-            if elapsed > 50:
-                if is_muted:
-                    mp3.set_volume(VOLUMEN_DEFECTO)
-                    is_muted = False
-                    print("Audio: Unmute")
-                else:
-                    mp3.set_volume(0)
-                    is_muted = True
-                    print("Audio: Mute")
+            if not sleeping:
+                print("Entrando en modo ahorro...")
+                oled.poweroff()
+                led1.off()
+                led2.off()
+                led3.off()
+                mp3.pause()
+
+                machine.freq(SLEEP_FREQ)
+                sleeping = True
+
+    # ==========================================================
+    # MODO AHORRO
+    # ==========================================================
+    if sleeping:
+        # Si se presiona el botón para despertar
+        if debounced_state == 0 and is_pressing and not long_press_handled:
+            long_press_handled = True
             is_pressing = False
 
-    last_button_state = current_button_state
+            print("Saliendo del modo ahorro...")
+            machine.freq(NORMAL_FREQ)
 
-    # --- 2. Lectura Periódica de Sensores (Cada 2s) ---
+            oled.poweron()
+            oled.fill(0)
+            oled.show()
+
+            sleeping = False
+
+            # Esperar debouncing para evitar lecturas fantasmas al salir
+            time.sleep_ms(200)
+
+        handle_http_request()
+        time.sleep_ms(20)
+        continue
+
+    # ==========================================================
+    # LECTURA DE SENSORES Y PANTALLA
+    # ==========================================================
     if time.ticks_diff(now, last_read) > 2000 or last_read == 0:
+
         temp_dht, hum = dht22.read()
         temp_bmp, pres = bmp.read()
         luz = ldr.read_percent()
-        
-        if pres_anterior is not None:
+0
+        if pres_anterior is not None and pres is not None:
             variacion_presion = pres - pres_anterior
 
         pres_anterior = pres
 
         show_data(temp_dht, hum, temp_bmp, pres, luz)
-        
-        update_track(luz,temp_dht,hum,pres,variacion_presion)
-        
-        update_leds(luz,hum, temp_dht)
+        update_track(luz, temp_dht, hum, pres, variacion_presion)
+        update_leds(luz, hum, temp_dht)
 
-        print("DHT22: {}C {}% | BMP280: {:.1f}C {:.1f}hPa | Luz: {}%".format(
-            temp_dht, hum, temp_bmp, pres, luz))
+        print(
+            "DHT22: {}C {}% | BMP280: {:.1f}C {:.1f}hPa (Var: {:.1f}) | Luz: {}% | Pista: {}".format(
+                temp_dht,
+                hum,
+                temp_bmp,
+                pres,
+                variacion_presion,
+                luz,
+                ultima_pista,
+            )
+        )
 
         last_read = now
 
-    # --- 3. Servidor Web HTTP ---
     handle_http_request()
-
-    time.sleep_ms(20)
+    time.sleep_ms(20) 
