@@ -54,7 +54,7 @@ VOLUMEN_DEFECTO = 20
 mp3.set_volume(VOLUMEN_DEFECTO)
 
 is_muted = False
-
+ultima_pista= None
 
 def show_ip_screen(ip):
     oled.fill(0)
@@ -109,6 +109,30 @@ def update_leds(luz,hum,temp_dht):
         led1.red()
     
 
+def update_track(luz,temp_dht,hum,pres,variacion_presion):
+    
+    global ultima_pista
+
+    pista = None
+    
+    
+    if temp_dht > 39:
+        pista = 3
+    elif temp_dht < 11:
+        pista = 4
+    elif hum > 70:
+        pista = 6
+    elif hum < 30:
+        pista = 5
+    elif luz < 30:
+        pista = 2
+    elif variacion_presion <= -2:
+        pista = 7
+        
+    if pista is not None and pista != ultima_pista:
+        
+        mp3.play_track(pista)
+        ultima_pista = pista
 
 def enter_hibernation():
     print("Entrando en modo hibernación...")
@@ -213,6 +237,9 @@ print("Esperando conexión de App Inventor o pulsación de SW1...")
 
 temp_dht, hum, temp_bmp, pres, luz = 0, 0, 0, 0, 0
 
+pres_anterior = None
+variacion_presion = 0
+
 while button.value() == 1:
     # Si App Inventor realiza una petición, atendemos y omitimos la espera manual
     if handle_http_request():
@@ -275,9 +302,17 @@ while True:
         temp_dht, hum = dht22.read()
         temp_bmp, pres = bmp.read()
         luz = ldr.read_percent()
+        
+        if pres_anterior is not None:
+            variacion_presion = pres - pres_anterior
+
+        pres_anterior = pres
 
         show_data(temp_dht, hum, temp_bmp, pres, luz)
-        update_leds(luz)
+        
+        update_track(luz,temp_dht,hum,pres,variacion_presion)
+        
+        update_leds(luz,hum, temp_dht)
 
         print("DHT22: {}C {}% | BMP280: {:.1f}C {:.1f}hPa | Luz: {}%".format(
             temp_dht, hum, temp_bmp, pres, luz))
