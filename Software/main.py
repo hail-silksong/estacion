@@ -83,13 +83,31 @@ def show_data(temp_dht, hum, temp_bmp, pres, luz):
     oled.show()
 
 
-def update_leds(luz):
+def update_leds(luz,hum,temp_dht):
+    #LED HUMEDAD#
+    if hum < 30:
+        led3.blue()
+    elif hum < 70:
+        led3.green()
+    else:
+        led3.red()
+    #LED TEMPERATURA#
+    
+    if temp_dht < 30:
+        led2.blue()
+    elif temp_dht < 70:
+        led2.green()
+    else:
+        led2.red()
+    
+    #LED LUZ#
     if luz < 30:
         led1.blue()
     elif luz < 70:
         led1.green()
     else:
         led1.red()
+    
 
 
 def enter_hibernation():

@@ -58,7 +58,9 @@ if __name__ == "__main__":
     from time import sleep
 
     # Cambia los pines si son diferentes
-    led = RGBLed(r_pin=38, g_pin=40, b_pin=39, use_pwm=True)
+    led1 = RGBLed(r_pin=38, g_pin=40, b_pin=39, use_pwm=True)
+    led2 = RGBLed(r_pin=35, g_pin=37, b_pin=36, use_pwm=True)
+    led3 = RGBLed(r_pin=21, g_pin=34, b_pin=33, use_pwm=True)
 
     print("Prueba de LED RGB")
 
@@ -78,29 +80,31 @@ if __name__ == "__main__":
         print("Prueba de colores...")
         for nombre, color in pruebas:
             print(nombre)
-            led.set_color(*color)
+            led1.set_color(*color)
+            led2.set_color(*color)
+            led3.set_color(*color)
             sleep(1)
 
         print("Fundido Rojo")
         for i in range(256):
-            led.set_color(i, 0, 0)
+            led1.set_color(i, 0, 0)
             sleep(0.005)
         for i in range(255, -1, -1):
-            led.set_color(i, 0, 0)
+            led1.set_color(i, 0, 0)
             sleep(0.005)
 
         print("Fundido Verde")
         for i in range(256):
-            led.set_color(0, i, 0)
+            led1.set_color(0, i, 0)
             sleep(0.005)
         for i in range(255, -1, -1):
-            led.set_color(0, i, 0)
+            led1.set_color(0, i, 0)
             sleep(0.005)
 
         print("Fundido Azul")
         for i in range(256):
-            led.set_color(0, 0, i)
+            led1.set_color(0, 0, i)
             sleep(0.005)
         for i in range(255, -1, -1):
-            led.set_color(0, 0, i)
+            led1.set_color(0, 0, i)
             sleep(0.005)
